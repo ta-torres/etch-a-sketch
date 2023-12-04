@@ -1,0 +1,48 @@
+*,
+*::before,
+*::after {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+}
+
+html,
+body {
+    font-family: Roboto, sans-serif;
+    height: 100%;
+}
+
+body {
+    display: flex;
+    flex-direction: column;
+}
+
+#grid-container {
+    display: flex;
+    flex-wrap: wrap;
+    width: 960px;
+    height: 960px;
+    margin: 0 auto;
+}
+
+.grid-row {
+    display: flex;
+    flex-direction: row;
+    width: 100%;
+}
+
+.grid-square {
+    flex: 1 0 auto;
+    height: calc(960px / 16);
+    /* Adjust the height based on the number of rows */
+    border: 1px solid #ddd;
+    /*margin: 10px;*/
+}
+
+.grid-square:hover {
+    background-color: #333;
+}
+
+#grid-size-button {
+    margin: 20px auto;
+}
