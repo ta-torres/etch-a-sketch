@@ -26,5 +26,13 @@ document.addEventListener('DOMContentLoaded', () => {
 
     container.addEventListener('mouseover', changeColor);
     
+    gridSizeButton.addEventListener('click', () => {
+        let size = prompt('Enter new grid size (max 100):');
+        size = Math.min(100, Math.abs(parseInt(size)));
+        if (!isNaN(size)) {
+            createGrid(size);
+        }
+    });
+
     createGrid(16);
 });
