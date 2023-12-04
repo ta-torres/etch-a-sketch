@@ -2,20 +2,33 @@ document.addEventListener('DOMContentLoaded', () => {
     const container = document.getElementById('grid-container');
     const gridSizeButton = document.getElementById('grid-size-button');
 
-    function createGrid(size) {
+    function createGrid(gridSize) {
         container.textContent = ''; // Clear the previous grid
-        const squareSize = 960 / size; // Calculate the size of each square
-        for (let i = 0; i < size; i++) { // Create rows
-            const row = document.createElement('div');
-            row.classList.add('grid-row');
-            for (let j = 0; j < size; j++) { // Create columns
-                const square = document.createElement('div');
-                square.classList.add('grid-square');
-                square.style.height = `${squareSize}px`;
-                row.appendChild(square); // Add the square to the row
+        const squareSize = 960 / gridSize; // Calculate the size of each square
+        
+        for (let row = 0; row < gridSize; row++) { // Create rows
+            let gridRow = createGridRow();
+            
+            for (let col = 0; col < gridSize; col++) { // Create columns
+                let gridSquare = createGridSquare(squareSize);
+                gridRow.appendChild(gridSquare); // Add the square to the row
             }
-            container.appendChild(row); // Add the row to the grid
+            container.appendChild(gridRow); // Add the row to the grid
         }
+    }
+
+    function createGridRow() {
+        let row = document.createElement('div');
+        row.classList.add = 'grid-row';
+        return row;
+    }
+
+    function createGridSquare(size) {
+        let square = document.createElement('div');
+        square.classList.add('grid-square');
+        square.style.height = `${size}px`;
+        square.style.width = `${size}px`;
+        return square;
     }
 
     function changeColor(hoveredSquare) {
