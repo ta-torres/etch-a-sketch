@@ -43,6 +43,6 @@ body {
     background-color: #333;
 }
 
-#grid-size-button {
-    margin: 20px auto;
+#grid-size-button, #reset-button, #rainbow-button {
+    margin: 5px auto;
 }
