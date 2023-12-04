@@ -17,6 +17,14 @@ document.addEventListener('DOMContentLoaded', () => {
             container.appendChild(row); // Add the row to the grid
         }
     }
+
+    function changeColor(hoveredSquare) {
+        if (hoveredSquare.target.classList.contains('grid-square')) {
+            hoveredSquare.target.style.backgroundColor = 'black';
+        }
+    }
+
+    container.addEventListener('mouseover', changeColor);
     
     createGrid(16);
 });
