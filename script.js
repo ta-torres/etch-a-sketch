@@ -95,4 +95,58 @@ function getRandomColor() {
 }
 
 
+const eraseButton = document.getElementById('erase-button');
+
+eraseButton.addEventListener('click', () => {
+    const isEraserActive = container.dataset.isEraserActive === 'true';
+    container.dataset.isEraserActive = !isEraserActive;
+
+    if (isEraserActive) {
+        container.removeEventListener('mouseover', eraseColor);
+        eraseButton.classList.remove('button-active');
+    } else {
+        container.addEventListener('mouseover', eraseColor);
+        eraseButton.classList.add('button-active');
+    }
+});
+
+function eraseColor(event) {
+    if (event.target.classList.contains('grid-square')) {
+        event.target.style.backgroundColor = 'white';
+    }
+}
+
+const colorPicker = document.getElementById('color-picker');
+
+colorPicker.addEventListener('input', (event) => {
+    // Update currentColor with the selected color value
+    currentColor = event.target.value;
+});
+
+let paletteColors = new Array(6).fill('#FFFFFF');
+function updatePaletteDisplay() {
+    paletteColors.forEach((color, index) => {
+        const paletteDiv = document.getElementById(`palette-color-${index + 1}`);
+        paletteDiv.style.backgroundColor = color;
+    });
+}
+updatePaletteDisplay();
+
+const saveColorButton = document.getElementById('save-color');
+
+saveColorButton.addEventListener('click', () => {
+    // Find the first empty or undefined slot in the palette
+    const emptyIndex = paletteColors.indexOf('#FFFFFF');
+    if (emptyIndex !== -1) {
+        // Save the current color to that slot
+        paletteColors[emptyIndex] = currentColor;
+        updatePaletteDisplay();
+    }
+});
+
+// Add event listeners to the palette colors for selection
+document.querySelectorAll('.palette-color').forEach((paletteDiv, index) => {
+    paletteDiv.addEventListener('click', () => {
+        currentColor = paletteColors[index]; // Update the current color with the selected palette color
+    });
 });

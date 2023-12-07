@@ -1,17 +1,46 @@
 <!DOCTYPE html>
 <html lang="en">
+
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Etch a Sketch</title>
     <link rel="stylesheet" href="style.css">
 </head>
+
 <body>
-    <button id="grid-size-button">Set Grid Size</button>
-    <button id="reset-button">Reset</button>
-    <button id="rainbow-button">Rainbow</button>
-    
-    <div id="grid-container"></div>
+    <div id="header">
+        <h1>Etch-a-Sketch</h1>
+    </div>
+    <div id="main-wrapper">
+        <div id="options-container">
+            <button id="grid-size-button">Set Grid Size</button>
+            <button id="reset-button">Reset grid</button>
+            <button id="rainbow-button">Rainbow</button>
+            <button id="erase-button">Eraser</button>
+
+            <div id="color-picker-container">
+                <label for="color-picker">Pick a color: </label>
+                <input type="color" id="color-picker">
+            </div>
+            <div id="palette-container">    
+                <div class="palette-color" id="palette-color-1"></div>
+                <div class="palette-color" id="palette-color-2"></div>
+                <div class="palette-color" id="palette-color-3"></div>
+                <div class="palette-color" id="palette-color-4"></div>
+                <div class="palette-color" id="palette-color-5"></div>
+                <div class="palette-color" id="palette-color-6"></div>
+                <button id="save-color">Save Color to Palette</button>
+            </div>
+        </div>
+
+        <div id="grid-container"></div>
+
+    </div>
+    <div id="footer">
+        <p> <a href="https://github.com/ta-torres/Etch-a-Sketch"><img src="images/logo-github.svg"></a> </p>
+    </div>
     <script src="script.js"></script>
 </body>
+
 </html>
