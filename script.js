@@ -1,8 +1,11 @@
 document.addEventListener('DOMContentLoaded', () => {
-    const container = document.getElementById('grid-container');
-    const gridSizeButton = document.getElementById('grid-size-button');
+    createGrid(16);
+});
 
-    function createGrid(gridSize) {
+const container = document.getElementById('grid-container');
+const gridSizeButton = document.getElementById('grid-size-button');
+
+function createGrid(gridSize) {
         container.textContent = ''; // Clear the previous grid
 
         const gridContainerStyle = getComputedStyle(container);
@@ -33,61 +36,63 @@ document.addEventListener('DOMContentLoaded', () => {
         return square;
     }
 
-    let currentColor = 'black';
-    function changeColor(hoveredSquare) {
-        if (hoveredSquare.target.classList.contains('grid-square')) {
-            hoveredSquare.target.style.backgroundColor = currentColor;
-        }
+
+let currentColor = 'black';
+    
+function changeColor(hoveredSquare) {
+    if (hoveredSquare.target.classList.contains('grid-square')) {
+        hoveredSquare.target.style.backgroundColor = currentColor;
     }
+}
 
-    container.addEventListener('mouseover', changeColor);
+container.addEventListener('mouseover', changeColor);
 
-    gridSizeButton.addEventListener('click', () => {
-        let size = prompt('Enter new grid size (max 100):');
-        size = Math.min(100, Math.abs(parseInt(size)));
-        if (!isNaN(size)) {
-            createGrid(size);
-        }
+gridSizeButton.addEventListener('click', () => {
+    let size = prompt('Enter new grid size (max 100):');
+    size = Math.min(100, Math.abs(parseInt(size)));
+    if (!isNaN(size)) {
+        createGrid(size);
+    }
+});
+
+const resetButton = document.getElementById('reset-button');
+const rainbowButton = document.getElementById('rainbow-button');
+
+
+resetButton.addEventListener('click', () => {
+    const gridSquare = document.querySelectorAll('.grid-square');
+    gridSquare.forEach((square) => {
+        square.style.backgroundColor = 'white';
     });
+});
 
-    const resetButton = document.getElementById('reset-button');
-    const rainbowButton = document.getElementById('rainbow-button');
+rainbowButton.addEventListener('click', toggleRainbowEffect);
 
+function toggleRainbowEffect() {
+    const isRainbowActive = container.dataset.isRainbowActive === 'true';
+    container.dataset.isRainbowActive = !isRainbowActive;
 
-    resetButton.addEventListener('click', () => {
-        const gridSquare = document.querySelectorAll('.grid-square');
-        gridSquare.forEach((square) => {
-            square.style.backgroundColor = 'white';
-        });
-    });
-
-    rainbowButton.addEventListener('click', toggleRainbowEffect);
-
-    function toggleRainbowEffect() {
-        const isRainbowActive = container.dataset.isRainbowActive === 'true';
-        container.dataset.isRainbowActive = !isRainbowActive;
-
-        if (isRainbowActive) {
-            container.removeEventListener('mouseover', changeColorRainbow);
-            rainbowButton.classList.remove('button-active');
-        } else {
-            container.addEventListener('mouseover', changeColorRainbow);
-            rainbowButton.classList.add('button-active');
-        }
+    if (isRainbowActive) {
+        container.removeEventListener('mouseover', changeColorRainbow);
+        rainbowButton.classList.remove('button-active');
+    } else {
+        container.addEventListener('mouseover', changeColorRainbow);
+        rainbowButton.classList.add('button-active');
     }
+}
 
-    function changeColorRainbow(square) {
-        if (square.target.classList.contains('grid-square')) {
-            square.target.style.backgroundColor = getRandomColor();
-        }
+function changeColorRainbow(square) {
+    if (square.target.classList.contains('grid-square')) {
+        square.target.style.backgroundColor = getRandomColor();
     }
+}
 
-    function getRandomColor() {
-        const red = Math.floor(Math.random() * 256);
-        const green = Math.floor(Math.random() * 256);
-        const blue = Math.floor(Math.random() * 256);
-        return `rgb(${red}, ${green}, ${blue})`;
-    }
+function getRandomColor() {
+    const red = Math.floor(Math.random() * 256);
+    const green = Math.floor(Math.random() * 256);
+    const blue = Math.floor(Math.random() * 256);
+    return `rgb(${red}, ${green}, ${blue})`;
+}
 
-    createGrid(16);
+
 });
