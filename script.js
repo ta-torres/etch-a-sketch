@@ -69,8 +69,10 @@ document.addEventListener('DOMContentLoaded', () => {
 
         if (isRainbowActive) {
             container.removeEventListener('mouseover', changeColorRainbow);
+            rainbowButton.classList.remove('button-active');
         } else {
             container.addEventListener('mouseover', changeColorRainbow);
+            rainbowButton.classList.add('button-active');
         }
     }
 
