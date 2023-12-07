@@ -33,9 +33,10 @@ document.addEventListener('DOMContentLoaded', () => {
         return square;
     }
 
+    let currentColor = 'black';
     function changeColor(hoveredSquare) {
         if (hoveredSquare.target.classList.contains('grid-square')) {
-            hoveredSquare.target.style.backgroundColor = 'black';
+            hoveredSquare.target.style.backgroundColor = currentColor;
         }
     }
 
