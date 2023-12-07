@@ -4,11 +4,13 @@ document.addEventListener('DOMContentLoaded', () => {
 
     function createGrid(gridSize) {
         container.textContent = ''; // Clear the previous grid
-        const squareSize = 960 / gridSize; // Calculate the size of each square
-        
+
+        const gridContainerStyle = getComputedStyle(container);
+        const squareSize = parseInt(gridContainerStyle.height) / gridSize;
+
         for (let row = 0; row < gridSize; row++) { // Create rows
             let gridRow = createGridRow();
-            
+
             for (let col = 0; col < gridSize; col++) { // Create columns
                 let gridSquare = createGridSquare(squareSize);
                 gridRow.appendChild(gridSquare); // Add the square to the row
