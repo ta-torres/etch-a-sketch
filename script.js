@@ -13,6 +13,8 @@ const saveColorButton = document.getElementById('save-color');
 let currentColor = 'black';
 let paletteColors = new Array(6).fill('#FFFFFF');
 let isMouseDown = false;
+let isRainbowActive = false;
+let isEraseActive = false;
 
 function createGrid(gridSize) {
     container.textContent = ''; // Clear the previous grid
@@ -63,7 +65,15 @@ container.addEventListener('mouseup', () => {
 
 function applyColor(square) {
     if (square.target.classList.contains('grid-square')) {
-        square.target.style.backgroundColor = currentColor;
+        if (isRainbowActive) {
+            square.target.style.backgroundColor = getRandomColor();
+        }
+        else if (isEraseActive) {
+            square.target.style.backgroundColor = 'white';
+        }
+        else {
+            square.target.style.backgroundColor = currentColor;
+        }
     }
 }
 
@@ -85,21 +95,15 @@ resetButton.addEventListener('click', () => {
 rainbowButton.addEventListener('click', toggleRainbowEffect);
 
 function toggleRainbowEffect() {
-    const isRainbowActive = container.dataset.isRainbowActive === 'true';
-    container.dataset.isRainbowActive = !isRainbowActive;
+    isRainbowActive = !isRainbowActive;
+    isEraseActive = false;
+    eraseButton.classList.remove('button-active');
 
     if (isRainbowActive) {
-        container.removeEventListener('mouseover', changeColorRainbow);
-        rainbowButton.classList.remove('button-active');
-    } else {
-        container.addEventListener('mouseover', changeColorRainbow);
         rainbowButton.classList.add('button-active');
     }
-}
-
-function changeColorRainbow(square) {
-    if (square.target.classList.contains('grid-square')) {
-        square.target.style.backgroundColor = getRandomColor();
+    else {
+        rainbowButton.classList.remove('button-active');
     }
 }
 
@@ -111,23 +115,17 @@ function getRandomColor() {
 }
 
 eraseButton.addEventListener('click', () => {
-    const isEraserActive = container.dataset.isEraserActive === 'true';
-    container.dataset.isEraserActive = !isEraserActive;
+    isEraseActive = !isEraseActive;
+    isRainbowActive = false;
+    rainbowButton.classList.remove('button-active');
 
-    if (isEraserActive) {
-        container.removeEventListener('mouseover', eraseColor);
-        eraseButton.classList.remove('button-active');
-    } else {
-        container.addEventListener('mouseover', eraseColor);
+    if (isEraseActive) {
         eraseButton.classList.add('button-active');
     }
-});
-
-function eraseColor(event) {
-    if (event.target.classList.contains('grid-square')) {
-        event.target.style.backgroundColor = 'white';
+    else {
+        eraseButton.classList.remove('button-active');
     }
-}
+});
 
 colorPicker.addEventListener('input', (event) => {
     // Update currentColor with the selected color value
