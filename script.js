@@ -4,41 +4,46 @@ document.addEventListener('DOMContentLoaded', () => {
 
 const container = document.getElementById('grid-container');
 const gridSizeButton = document.getElementById('grid-size-button');
-
-function createGrid(gridSize) {
-        container.textContent = ''; // Clear the previous grid
-
-        const gridContainerStyle = getComputedStyle(container);
-        const squareSize = parseInt(gridContainerStyle.height) / gridSize;
-
-        for (let row = 0; row < gridSize; row++) { // Create rows
-            let gridRow = createGridRow();
-
-            for (let col = 0; col < gridSize; col++) { // Create columns
-                let gridSquare = createGridSquare(squareSize);
-                gridRow.appendChild(gridSquare); // Add the square to the row
-            }
-            container.appendChild(gridRow); // Add the row to the grid
-        }
-    }
-
-    function createGridRow() {
-        let row = document.createElement('div');
-        row.classList.add = 'grid-row';
-        return row;
-    }
-
-    function createGridSquare(size) {
-        let square = document.createElement('div');
-        square.classList.add('grid-square');
-        square.style.height = `${size}px`;
-        square.style.width = `${size}px`;
-        return square;
-    }
-
+const resetButton = document.getElementById('reset-button');
+const rainbowButton = document.getElementById('rainbow-button');
+const eraseButton = document.getElementById('erase-button');
+const colorPicker = document.getElementById('color-picker');
+const saveColorButton = document.getElementById('save-color');
 
 let currentColor = 'black';
-    
+let paletteColors = new Array(6).fill('#FFFFFF');
+
+function createGrid(gridSize) {
+    container.textContent = ''; // Clear the previous grid
+
+    const gridContainerStyle = getComputedStyle(container);
+    const squareSize = parseInt(gridContainerStyle.height) / gridSize;
+
+    for (let row = 0; row < gridSize; row++) { // Create rows
+        let gridRow = createGridRow();
+
+        for (let col = 0; col < gridSize; col++) { // Create columns
+            let gridSquare = createGridSquare(squareSize);
+            gridRow.appendChild(gridSquare); // Add the square to the row
+        }
+        container.appendChild(gridRow); // Add the row to the grid
+    }
+}
+
+function createGridRow() {
+    let row = document.createElement('div');
+    row.classList.add = 'grid-row';
+    return row;
+}
+
+function createGridSquare(size) {
+    let square = document.createElement('div');
+    square.classList.add('grid-square');
+    square.style.height = `${size}px`;
+    square.style.width = `${size}px`;
+    return square;
+}
+
 function changeColor(hoveredSquare) {
     if (hoveredSquare.target.classList.contains('grid-square')) {
         hoveredSquare.target.style.backgroundColor = currentColor;
@@ -54,10 +59,6 @@ gridSizeButton.addEventListener('click', () => {
         createGrid(size);
     }
 });
-
-const resetButton = document.getElementById('reset-button');
-const rainbowButton = document.getElementById('rainbow-button');
-
 
 resetButton.addEventListener('click', () => {
     const gridSquare = document.querySelectorAll('.grid-square');
@@ -94,9 +95,6 @@ function getRandomColor() {
     return `rgb(${red}, ${green}, ${blue})`;
 }
 
-
-const eraseButton = document.getElementById('erase-button');
-
 eraseButton.addEventListener('click', () => {
     const isEraserActive = container.dataset.isEraserActive === 'true';
     container.dataset.isEraserActive = !isEraserActive;
@@ -116,14 +114,11 @@ function eraseColor(event) {
     }
 }
 
-const colorPicker = document.getElementById('color-picker');
-
 colorPicker.addEventListener('input', (event) => {
     // Update currentColor with the selected color value
     currentColor = event.target.value;
 });
 
-let paletteColors = new Array(6).fill('#FFFFFF');
 function updatePaletteDisplay() {
     paletteColors.forEach((color, index) => {
         const paletteDiv = document.getElementById(`palette-color-${index + 1}`);
@@ -131,8 +126,6 @@ function updatePaletteDisplay() {
     });
 }
 updatePaletteDisplay();
-
-const saveColorButton = document.getElementById('save-color');
 
 saveColorButton.addEventListener('click', () => {
     // Find the first empty or undefined slot in the palette
