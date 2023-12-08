@@ -165,10 +165,6 @@ input[type='color']:active {
     border: 1px solid #ddd;
 }
 
-.grid-square:hover {
-    background-color: #333;
-}
-
 #footer {
     background: #EAF6FF;
     color: #FFF4E6;

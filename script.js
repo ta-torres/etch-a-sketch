@@ -12,6 +12,7 @@ const saveColorButton = document.getElementById('save-color');
 
 let currentColor = 'black';
 let paletteColors = new Array(6).fill('#FFFFFF');
+let isMouseDown = false;
 
 function createGrid(gridSize) {
     container.textContent = ''; // Clear the previous grid
@@ -44,13 +45,27 @@ function createGridSquare(size) {
     return square;
 }
 
-function changeColor(hoveredSquare) {
-    if (hoveredSquare.target.classList.contains('grid-square')) {
-        hoveredSquare.target.style.backgroundColor = currentColor;
+container.addEventListener('mousedown', (square) => {
+    square.preventDefault(); // Prevent grabbing behavior
+    isMouseDown = true;
+    applyColor(square);
+});
+
+container.addEventListener('mouseover', (square) => {
+    if (isMouseDown) {
+        applyColor(square);
+    }
+});
+
+container.addEventListener('mouseup', () => {
+    isMouseDown = false;
+});
+
+function applyColor(square) {
+    if (square.target.classList.contains('grid-square')) {
+        square.target.style.backgroundColor = currentColor;
     }
 }
-
-container.addEventListener('mouseover', changeColor);
 
 gridSizeButton.addEventListener('click', () => {
     let size = prompt('Enter new grid size (max 100):');
