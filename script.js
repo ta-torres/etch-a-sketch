@@ -67,7 +67,7 @@ container.addEventListener('mouseover', (square) => {
     }
 });
 
-container.addEventListener('mouseup', () => {
+window.addEventListener('mouseup', () => {
     isMouseDown = false;
 });
 
@@ -87,13 +87,13 @@ function applyColor(square) {
 
 function changeGridSize() {
     const gridSize = gridSizeSlider.value;
-    
+
     gridSizeSlider.onmousemove = () => {
         gridSizeValue.textContent = `${gridSize} x ${gridSize}`;
-    }
+    };
     gridSizeSlider.onchange = () => {
         createGrid(gridSize);
-    }
+    };
 }
 
 function resetGrid() {
