@@ -16,6 +16,13 @@ let isMouseDown = false;
 let isRainbowActive = false;
 let isEraseActive = false;
 
+gridSizeButton.addEventListener('click', changeGridSize);
+resetButton.addEventListener('click', resetGrid);
+rainbowButton.addEventListener('click', toggleRainbowEffect);
+eraseButton.addEventListener('click', toggleEraseEffect);
+saveColorButton.addEventListener('click', saveColorToPalette);
+colorPicker.addEventListener('input', updateColorPicker);
+
 function createGrid(gridSize) {
     container.textContent = ''; // Clear the previous grid
 
@@ -77,22 +84,20 @@ function applyColor(square) {
     }
 }
 
-gridSizeButton.addEventListener('click', () => {
+function changeGridSize() {
     let size = prompt('Enter new grid size (max 100):');
     size = Math.min(100, Math.abs(parseInt(size)));
     if (!isNaN(size)) {
         createGrid(size);
     }
-});
+}
 
-resetButton.addEventListener('click', () => {
+function resetGrid() {
     const gridSquare = document.querySelectorAll('.grid-square');
     gridSquare.forEach((square) => {
         square.style.backgroundColor = 'white';
     });
-});
-
-rainbowButton.addEventListener('click', toggleRainbowEffect);
+}
 
 function toggleRainbowEffect() {
     isRainbowActive = !isRainbowActive;
@@ -114,7 +119,7 @@ function getRandomColor() {
     return `rgb(${red}, ${green}, ${blue})`;
 }
 
-eraseButton.addEventListener('click', () => {
+function toggleEraseEffect() {
     isEraseActive = !isEraseActive;
     isRainbowActive = false;
     rainbowButton.classList.remove('button-active');
@@ -125,12 +130,11 @@ eraseButton.addEventListener('click', () => {
     else {
         eraseButton.classList.remove('button-active');
     }
-});
+}
 
-colorPicker.addEventListener('input', (event) => {
-    // Update currentColor with the selected color value
+function updateColorPicker(event) {
     currentColor = event.target.value;
-});
+}
 
 function updatePaletteDisplay() {
     paletteColors.forEach((color, index) => {
@@ -140,7 +144,7 @@ function updatePaletteDisplay() {
 }
 updatePaletteDisplay();
 
-saveColorButton.addEventListener('click', () => {
+function saveColorToPalette() {
     // Find the first empty or undefined slot in the palette
     const emptyIndex = paletteColors.indexOf('#FFFFFF');
     if (emptyIndex !== -1) {
@@ -148,7 +152,7 @@ saveColorButton.addEventListener('click', () => {
         paletteColors[emptyIndex] = currentColor;
         updatePaletteDisplay();
     }
-});
+}
 
 // Add event listeners to the palette colors for selection
 document.querySelectorAll('.palette-color').forEach((paletteDiv, index) => {
