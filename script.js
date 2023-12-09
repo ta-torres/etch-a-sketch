@@ -3,7 +3,8 @@ document.addEventListener('DOMContentLoaded', () => {
 });
 
 const container = document.getElementById('grid-container');
-const gridSizeButton = document.getElementById('grid-size-button');
+const gridSizeSlider = document.getElementById('grid-size-slider');
+const gridSizeValue = document.getElementById('grid-size-value');
 const resetButton = document.getElementById('reset-button');
 const rainbowButton = document.getElementById('rainbow-button');
 const eraseButton = document.getElementById('erase-button');
@@ -16,7 +17,7 @@ let isMouseDown = false;
 let isRainbowActive = false;
 let isEraseActive = false;
 
-gridSizeButton.addEventListener('click', changeGridSize);
+gridSizeSlider.addEventListener('input', changeGridSize);
 resetButton.addEventListener('click', resetGrid);
 rainbowButton.addEventListener('click', toggleRainbowEffect);
 eraseButton.addEventListener('click', toggleEraseEffect);
@@ -85,10 +86,13 @@ function applyColor(square) {
 }
 
 function changeGridSize() {
-    let size = prompt('Enter new grid size (max 100):');
-    size = Math.min(100, Math.abs(parseInt(size)));
-    if (!isNaN(size)) {
-        createGrid(size);
+    const gridSize = gridSizeSlider.value;
+    
+    gridSizeSlider.onmousemove = () => {
+        gridSizeValue.textContent = `${gridSize} x ${gridSize}`;
+    }
+    gridSizeSlider.onchange = () => {
+        createGrid(gridSize);
     }
 }
 
